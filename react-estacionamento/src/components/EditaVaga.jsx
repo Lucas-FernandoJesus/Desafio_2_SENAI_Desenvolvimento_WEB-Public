@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function EditaVaga() {
   const [veiculos, setVeiculos] = useState([]);
   const [editando, setEditando] = useState(null);
-  const [formData, setFormData] = useState({
-    proprietario: "",
-    cpf: "",
-    placa: "",
-    modelo: ""
-  });
-  const [mensagem, setMensagem] = useState("");
+  const [formData, setFormData] = useState({ proprietario: "", cpf: "", placa: "", modelo: "" });
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -20,8 +15,13 @@ export default function EditaVaga() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:3001/veiculos/${id}`, { method: "DELETE" });
-    fetchData();
+    try {
+      await fetch(`http://localhost:3001/veiculos/${id}`, { method: "DELETE" });
+      toast.error("🗑️ Veículo excluído!");
+      fetchData();
+    } catch (err) {
+      toast.error("Erro ao excluir o veículo");
+    }
   };
 
   const abrirModalEdicao = (veiculo) => {
@@ -30,17 +30,19 @@ export default function EditaVaga() {
   };
 
   const salvarEdicao = async () => {
-    await fetch(`http://localhost:3001/veiculos/${editando}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      await fetch(`http://localhost:3001/veiculos/${editando}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    setEditando(null);
-    setMensagem("Veículo atualizado com sucesso!");
-    fetchData();
-
-    setTimeout(() => setMensagem(""), 3000);
+      setEditando(null);
+      toast.success("✏️ Veículo atualizado com sucesso!");
+      fetchData();
+    } catch (err) {
+      toast.error("Erro ao atualizar o veículo");
+    }
   };
 
   useEffect(() => {
@@ -50,13 +52,9 @@ export default function EditaVaga() {
   return (
     <main>
       <div className="btn-center">
-        <button className="voltar" onClick={() => navigate("/")}>
-          ⬅ Voltar à Tela Inicial
-        </button>
+        <button className="voltar" onClick={() => navigate("/")}>⬅ Voltar à Tela Inicial</button>
       </div>
       <h2>Editar/Remover Veículos Estacionados</h2>
-
-      {mensagem && <div className="alerta">{mensagem}</div>}
 
       <table>
         <thead>
@@ -88,34 +86,10 @@ export default function EditaVaga() {
         <div className="modal">
           <div className="modal-content">
             <h3>Editar Veículo</h3>
-            <input
-              type="text"
-              value={formData.proprietario}
-              onChange={(e) =>
-                setFormData({ ...formData, proprietario: e.target.value })
-              }
-              placeholder="Proprietário"
-            />
-            <input
-              type="text"
-              value={formData.cpf}
-              onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
-              placeholder="CPF"
-            />
-            <input
-              type="text"
-              value={formData.placa}
-              onChange={(e) => setFormData({ ...formData, placa: e.target.value })}
-              placeholder="Placa"
-            />
-            <input
-              type="text"
-              value={formData.modelo}
-              onChange={(e) =>
-                setFormData({ ...formData, modelo: e.target.value })
-              }
-              placeholder="Modelo"
-            />
+            <input type="text" value={formData.proprietario} onChange={(e) => setFormData({ ...formData, proprietario: e.target.value })} placeholder="Proprietário" />
+            <input type="text" value={formData.cpf} onChange={(e) => setFormData({ ...formData, cpf: e.target.value })} placeholder="CPF" />
+            <input type="text" value={formData.placa} onChange={(e) => setFormData({ ...formData, placa: e.target.value })} placeholder="Placa" />
+            <input type="text" value={formData.modelo} onChange={(e) => setFormData({ ...formData, modelo: e.target.value })} placeholder="Modelo" />
             <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
               <button onClick={salvarEdicao}>Salvar</button>
               <button onClick={() => setEditando(null)}>Cancelar</button>

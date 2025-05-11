@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 
 export default function CadastroVaga() {
   const [form, setForm] = useState({ proprietario: "", cpf: "", placa: "", modelo: "" });
@@ -12,21 +12,24 @@ export default function CadastroVaga() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:3001/veiculos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    alert("Veículo cadastrado com sucesso!");
-    setForm({ proprietario: "", cpf: "", placa: "", modelo: "" });
+    try {
+      await fetch("http://localhost:3001/veiculos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      toast.success("🚗 Veículo cadastrado com sucesso!");
+      setForm({ proprietario: "", cpf: "", placa: "", modelo: "" });
+    } catch (err) {
+      toast.error("Erro ao cadastrar o veículo");
+    }
   };
 
   return (
-    <main >
+    <main>
       <div className="btn-center">
-        <button className="voltar" onClick={() => navigate("/")}>
-          ⬅ Voltar à Tela Inicial
-        </button>
+        <button className="voltar" onClick={() => navigate("/")}>⬅ Voltar à Tela Inicial</button>
       </div>
       <form className="formulario" onSubmit={handleSubmit}>
         <input id="proprietario" value={form.proprietario} onChange={handleChange} placeholder="Nome do proprietario" required />
