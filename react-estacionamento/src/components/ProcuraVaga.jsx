@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function ProcuraVaga() {
   const [veiculos, setVeiculos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3001/veiculos")
@@ -11,6 +14,11 @@ export default function ProcuraVaga() {
 
   return (
     <main>
+      <div className="btn-center">
+        <button className="voltar" onClick={() => navigate("/")}>
+          ⬅ Voltar à Tela Inicial
+        </button>
+      </div>
       <h2>Veículos Estacionados</h2>
       <table>
         <thead>

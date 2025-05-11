@@ -13,7 +13,7 @@ export default function Index() {
         <section className="menu">
           <ul className="menu">
             <li><Link to="/cadastro">Cadastrar Vagas</Link></li>
-            <li><Link to="/editar">Editar Vagas</Link></li>
+            <li><Link to="/editar">Editar/Remover Vagas</Link></li>
             <li><Link to="/procurar">Procurar Vagas</Link></li>
           </ul>
         </section>

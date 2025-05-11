@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CadastroVaga() {
   const [form, setForm] = useState({ proprietario: "", cpf: "", placa: "", modelo: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
@@ -19,8 +22,13 @@ export default function CadastroVaga() {
   };
 
   return (
-    <main>
-      <form onSubmit={handleSubmit}>
+    <main >
+      <div className="btn-center">
+        <button className="voltar" onClick={() => navigate("/")}>
+          ⬅ Voltar à Tela Inicial
+        </button>
+      </div>
+      <form className="formulario" onSubmit={handleSubmit}>
         <input id="proprietario" value={form.proprietario} onChange={handleChange} placeholder="Nome do proprietario" required />
         <input id="cpf" value={form.cpf} onChange={handleChange} placeholder="CPF do proprietario" required />
         <input id="placa" value={form.placa} onChange={handleChange} placeholder="Número da placa" required />

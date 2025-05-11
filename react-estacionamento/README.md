@@ -1,12 +1,95 @@
-# React + Vite
+# 🚗 Sistema de Controle de Estacionamento
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um sistema web completo para gestão de vagas de estacionamento. Desenvolvido com **React no frontend** e **Node.js + Express + Prisma no backend**, esse projeto permite cadastrar, editar, listar e excluir veículos de forma eficiente.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📦 Funcionalidades
 
-## Expanding the ESLint configuration
+- ✅ Cadastro de veículos com validação de campos
+- ✅ Listagem dinâmica dos veículos estacionados
+- ✅ Edição e exclusão via interface
+- ✅ Comunicação entre frontend e backend via API REST
+- ✅ Responsivo (mobile-friendly)
+- ✅ Design limpo com CSS modularizado
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+### 🔹 Frontend
+- [React](https://reactjs.org/)
+- [React Router DOM](https://reactrouter.com/)
+- `useState` e `useEffect` para manipulação de estado e efeitos
+- CSS modularizado e responsivo (`index.css`, `var.css`, `media.css`)
+- Vite (para desenvolvimento rápido e moderno)
+
+### 🔹 Backend
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Prisma ORM](https://www.prisma.io/) com SQLite ou PostgreSQL
+- API REST com endpoints para CRUD completo
+
+---
+
+## ⚙️ Como rodar o projeto
+
+### 📥 Clonar o repositório
+
+```bash
+git clone https://github.com/seu-usuario/react-estacionamento.git
+cd react-estacionamento
+```
+
+### 🖥️ Rodar o Backend
+
+```bash
+cd backend
+npm install
+npx prisma generate
+npx prisma migrate dev --name init
+node index.js
+```
+
+Servidor rodará em: [http://localhost:3001](http://localhost:3001)
+
+---
+
+### 🌐 Rodar o Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Acesse o app: [http://localhost:5173](http://localhost:5173)
+
+---
+
+## 📁 Estrutura de Pastas
+
+```
+react-estacionamento/
+├── backend/
+│   ├── index.js
+│   ├── prisma/
+│   └── ...
+└── frontend/
+    ├── src/
+    │   ├── components/
+    │   ├── styles/
+    │   └── ...
+```
+
+---
+
+## 👨‍💻 Desenvolvido por
+
+[Lucas Fernando](https://github.com/Lucas-FernandoJesus)
+
+---
+
+## 📜 Licença
+
+Este projeto é open-source e pode ser usado livremente. Só não estacione na vaga errada. 😁

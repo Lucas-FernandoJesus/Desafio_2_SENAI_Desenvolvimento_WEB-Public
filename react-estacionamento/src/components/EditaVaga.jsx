@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EditaVaga() {
   const [veiculos, setVeiculos] = useState([]);
+  const [editando, setEditando] = useState(null);
+  const [formData, setFormData] = useState({
+    proprietario: "",
+    cpf: "",
+    placa: "",
+    modelo: ""
+  });
+  const [mensagem, setMensagem] = useState("");
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const res = await fetch("http://localhost:3001/veiculos");
@@ -14,15 +24,23 @@ export default function EditaVaga() {
     fetchData();
   };
 
-  const handleEdit = async (id) => {
-    const novoModelo = prompt("Digite o novo modelo:");
-    if (!novoModelo) return;
-    await fetch(`http://localhost:3001/veiculos/${id}`, {
+  const abrirModalEdicao = (veiculo) => {
+    setFormData({ ...veiculo });
+    setEditando(veiculo.id);
+  };
+
+  const salvarEdicao = async () => {
+    await fetch(`http://localhost:3001/veiculos/${editando}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ modelo: novoModelo }),
+      body: JSON.stringify(formData),
     });
+
+    setEditando(null);
+    setMensagem("Veículo atualizado com sucesso!");
     fetchData();
+
+    setTimeout(() => setMensagem(""), 3000);
   };
 
   useEffect(() => {
@@ -31,7 +49,15 @@ export default function EditaVaga() {
 
   return (
     <main>
-      <h2>Editar Veículos Estacionados</h2>
+      <div className="btn-center">
+        <button className="voltar" onClick={() => navigate("/")}>
+          ⬅ Voltar à Tela Inicial
+        </button>
+      </div>
+      <h2>Editar/Remover Veículos Estacionados</h2>
+
+      {mensagem && <div className="alerta">{mensagem}</div>}
+
       <table>
         <thead>
           <tr>
@@ -50,13 +76,53 @@ export default function EditaVaga() {
               <td>{v.placa}</td>
               <td>{v.modelo}</td>
               <td>
-                <button onClick={() => handleEdit(v.id)}>Editar</button>
+                <button onClick={() => abrirModalEdicao(v)}>Editar</button>
                 <button onClick={() => handleDelete(v.id)}>Excluir</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {editando && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Editar Veículo</h3>
+            <input
+              type="text"
+              value={formData.proprietario}
+              onChange={(e) =>
+                setFormData({ ...formData, proprietario: e.target.value })
+              }
+              placeholder="Proprietário"
+            />
+            <input
+              type="text"
+              value={formData.cpf}
+              onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
+              placeholder="CPF"
+            />
+            <input
+              type="text"
+              value={formData.placa}
+              onChange={(e) => setFormData({ ...formData, placa: e.target.value })}
+              placeholder="Placa"
+            />
+            <input
+              type="text"
+              value={formData.modelo}
+              onChange={(e) =>
+                setFormData({ ...formData, modelo: e.target.value })
+              }
+              placeholder="Modelo"
+            />
+            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <button onClick={salvarEdicao}>Salvar</button>
+              <button onClick={() => setEditando(null)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
