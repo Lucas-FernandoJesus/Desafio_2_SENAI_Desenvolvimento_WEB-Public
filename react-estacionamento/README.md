@@ -10,6 +10,7 @@ Um sistema web completo para gestão de vagas de estacionamento. Desenvolvido co
 - ✅ Listagem dinâmica dos veículos estacionados
 - ✅ Edição e exclusão via interface
 - ✅ Comunicação entre frontend e backend via API REST
+- ✅ Notificações amigáveis com `react-toastify`
 - ✅ Responsivo (mobile-friendly)
 - ✅ Design limpo com CSS modularizado
 
@@ -20,9 +21,10 @@ Um sistema web completo para gestão de vagas de estacionamento. Desenvolvido co
 ### 🔹 Frontend
 - [React](https://reactjs.org/)
 - [React Router DOM](https://reactrouter.com/)
+- [`react-toastify`](https://fkhadra.github.io/react-toastify/) para notificações visuais
 - `useState` e `useEffect` para manipulação de estado e efeitos
 - CSS modularizado e responsivo (`index.css`, `var.css`, `media.css`)
-- Vite (para desenvolvimento rápido e moderno)
+- [Vite](https://vitejs.dev/) para desenvolvimento rápido e moderno
 
 ### 🔹 Backend
 - [Node.js](https://nodejs.org/)
@@ -34,62 +36,19 @@ Um sistema web completo para gestão de vagas de estacionamento. Desenvolvido co
 
 ## ⚙️ Como rodar o projeto
 
-### 📥 Clonar o repositório
+🖥️ Rodar o Backend
+- cd backend
+- npm install
+- npx prisma generate
+- npx prisma migrate dev --name init
+- node index.js
+- Servidor rodará em: http://localhost:3001
 
-```bash
+🌐 Rodar o Frontend
+- cd frontend
+- npm install
+- npm run dev
+
+### 📥 Clonar o repositório
 git clone https://github.com/seu-usuario/react-estacionamento.git
 cd react-estacionamento
-```
-
-### 🖥️ Rodar o Backend
-
-```bash
-cd backend
-npm install
-npx prisma generate
-npx prisma migrate dev --name init
-node index.js
-```
-
-Servidor rodará em: [http://localhost:3001](http://localhost:3001)
-
----
-
-### 🌐 Rodar o Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Acesse o app: [http://localhost:5173](http://localhost:5173)
-
----
-
-## 📁 Estrutura de Pastas
-
-```
-react-estacionamento/
-├── backend/
-│   ├── index.js
-│   ├── prisma/
-│   └── ...
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── styles/
-    │   └── ...
-```
-
----
-
-## 👨‍💻 Desenvolvido por
-
-[Lucas Fernando](https://github.com/Lucas-FernandoJesus)
-
----
-
-## 📜 Licença
-
-Este projeto é open-source e pode ser usado livremente. Só não estacione na vaga errada. 😁
